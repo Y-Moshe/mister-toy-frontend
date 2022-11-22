@@ -11,7 +11,7 @@ export const toyService = {
 }
 
 function query(filterBy) {
-  return httpService.get('toy')
+  return httpService.get('toy', { params: { ...filterBy }})
 }
 
 function getById(id) {
