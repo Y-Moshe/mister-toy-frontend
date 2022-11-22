@@ -1,0 +1,36 @@
+.toy-preview {
+  max-width: 200px;
+}
+
+.toy-preview .toy-img {
+  width: 100%;
+  height: auto;
+}
+
+.toy-preview .el-card__header h1 {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.toy-preview .el-card__header,
+.toy-preview .el-card__body {
+  padding: 15px;
+}
+
+.toy-preview .el-card__body {}
+
+.toy-preview .el-card__body .labels {
+  flex-grow: 1;
+
+}
+
+.toy-preview .toy-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.toy-preview .toy-actions a {
+  font-size: 1.1em;
+}
