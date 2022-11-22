@@ -7,8 +7,8 @@ export const toyModule = {
       totalPages: 0,
       filterBy: {
         keyword: '',
-        page: 0,
-        itemsPerPage: 6,
+        // page: 0,
+        // itemsPerPage: 6,
         inStock: true,
         labels: [],
         sortBy: 'Name'
@@ -16,9 +16,8 @@ export const toyModule = {
     }
   },
   mutations: {
-    setToys(state, { toys, totalPages }) {
+    setToys(state, toys) {
       state.toys = toys
-      state.totalPages = totalPages
     },
     removeToy({ toys }, toyId) {
       const idx = toys.findIndex(({ _id }) => _id === toyId)
@@ -33,13 +32,11 @@ export const toyModule = {
     },
     setFilterBy(state, { target }) {
       state.filterBy[target.name] = target.value
-      state.toys = []
-      this.dispatch('loadToys')
     }
   },
   actions: {
-    loadToys({ commit, getters }) {
-      return toyService.query(getters.filterBy)
+    loadToys({ commit }) {
+      return toyService.query()
         .then(results => commit('setToys', results))
         .catch(err => {
           console.log('err from loadToys')
@@ -70,15 +67,7 @@ export const toyModule = {
     toys({ toys }) {
       return toys
     },
-    // filterBy: {
-    //   keyword: '',
-    //   page: 0,
-    //   itemsPerPage: 6,
-    //   inStock: true,
-    //   labels: []
-    // }
     filteredToys({ toys, filterBy }) {
-      console.log('filterBy', filterBy)
       const regex = new RegExp(filterBy.keyword, 'i')
       let filteredToys = toys.filter(toy => regex.test(toy.name)) // By name
       if (filterBy.labels.length > 0) // By labels
@@ -94,9 +83,9 @@ export const toyModule = {
       filteredToys = filteredToys.filter(toy => toy.inStock === filterBy.inStock) // By inStock
       return filteredToys
     },
-    totalPages({ totalPages }) {
-      return totalPages
-    }
+    // totalPages({ totalPages }) {
+    //   return totalPages
+    // }
   }
 }
 
