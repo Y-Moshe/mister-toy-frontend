@@ -18,13 +18,11 @@ import { LABELS } from '../services/toy.service'
 
 import awesomeBarChart from '../cmps/charts/awesome-bar-chart.vue'
 import awesomePieChart from '../cmps/charts/awesome-pie-chart.vue'
-import awesomeMap from '../cmps/awesome-map.vue'
 
 export default {
   components: {
     awesomeBarChart,
-    awesomePieChart,
-    awesomeMap
+    awesomePieChart
   },
   data() {
     return {
