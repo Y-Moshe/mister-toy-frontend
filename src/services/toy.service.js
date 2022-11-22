@@ -10,8 +10,8 @@ export const toyService = {
   getEmptyToy
 }
 
-function query(filterBy) {
-  return httpService.get('toy', { params: { ...filterBy }})
+function query() {
+  return httpService.get('toy')
 }
 
 function getById(id) {
