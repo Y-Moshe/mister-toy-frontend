@@ -1,11 +1,11 @@
 <template>
   <section class="dashboard">
     <el-row>
-      <el-col :span="12">
+      <el-col :offset="2" :span="10">
         <awesome-bar-chart :data="barChartData" />
       </el-col>
 
-      <el-col :span="12">
+      <el-col :span="10">
         <awesome-pie-chart :data="pieChartData" />
       </el-col>
     </el-row>
