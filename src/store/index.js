@@ -3,7 +3,7 @@ import { createStore } from 'vuex'
 import { toyModule } from './modules/toy.store.js'
 
 export default createStore({
-  strict: true,
+  strict: process.env.NODE_ENV !== 'production',
   state() {
     return {}
   },
