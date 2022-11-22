@@ -3,6 +3,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import toyApp from '../views/toy-app.vue'
 import toyEdit from '../views/toy-edit.vue'
 import toyDetails from '../views/toy-details.vue'
+import dashboard from '../views/dashboard.vue'
 
 const routes = [
   {
@@ -20,6 +21,10 @@ const routes = [
   {
     path: '/toy/:id',
     component: toyDetails
+  },
+  {
+    path: '/dashboard',
+    component: dashboard
   }
 ]
 
