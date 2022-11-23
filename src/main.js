@@ -7,7 +7,7 @@ import router from './router'
 import store from './store'
 import { clickOutsideDirective, focusDirective, rainbowDirective } from './directives'
 
-import './styles/main.css'
+import './styles/main.scss'
 
 const app = createApp(App)
 

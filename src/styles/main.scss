@@ -1,0 +1,50 @@
+/* Setup */
+@import './setup/_functions.scss';
+@import './setup/_mixins.scss';
+@import './setup/_typography.scss';
+@import './setup/_variables.scss';
+
+/* Basics */
+@import './basics/_base.scss';
+@import './basics/_helpers.scss';
+@import './basics/_layout.scss';
+
+/* Components */
+@import './cmps/loader.scss';
+@import './cmps/pagination.scss';
+@import './cmps/dropdown-select.scss';
+
+@import './cmps/toy/toy-filter.scss';
+@import './cmps/toy/toy-list.scss';
+@import './cmps/toy/toy-preview.scss';
+
+@import './cmps/dashboard.scss';
+
+.main-app {
+    min-height: 100vh;
+    grid-template-rows: auto 1fr auto;
+}
+
+.main-view {
+    margin-block: 15px;
+    padding-inline: 10px;
+}
+
+.main-header {
+    background-color: #2f2e3d;
+    padding: 25px;
+    color: white;
+}
+
+.main-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.main-footer {
+    background-color: #5d7baf;
+    color: whitesmoke;
+    padding: 10px;
+    text-align: center;
+}
