@@ -4,21 +4,3 @@
   justify-content: center;
   gap: 10px;
 }
-
-.add-toy {
-  display: flex;
-  border-radius: 4px;
-  padding: 10px;
-  font-size: 1.2em;
-  background-color: orange !important;
-  color: white;
-}
-
-.add-toy a {
-  margin: auto;
-}
-
-.add-toy:hover {
-  color: orange;
-  background-color: #bcbcbc !important;
-}
