@@ -1,11 +1,13 @@
 <template>
   <header>
-    <router-link to="/">
-      <h1>Toys</h1>
-    </router-link>
-    <router-link to="/dashboard">
-      Dashboard
-    </router-link>
+    <nav class="main-nav">
+      <router-link to="/">
+        <h1>Toys</h1>
+      </router-link>
+      <router-link to="/dashboard">
+        Dashboard
+      </router-link>
+    </nav>
   </header>
 </template>
 

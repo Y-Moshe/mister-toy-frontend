@@ -1,8 +1,8 @@
 <template>
-  <section class="main-app">
-    <app-header />
+  <section class="main-app main-layout">
+    <app-header class="main-header main-layout full" />
     <router-view class="main-view" />
-    <app-footer />
+    <app-footer class="main-footer full" />
     <user-msg />
   </section>
 </template>

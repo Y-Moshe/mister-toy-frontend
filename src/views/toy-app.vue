@@ -1,7 +1,9 @@
 <template>
   <section class="toy-app">
     <toy-filter :filterBy="filterBy" @change="changeFilter" />
-
+    <div class="add-toy" style="max-width: 200px">
+      <router-link to="/toy/edit">Add a toy +</router-link>
+    </div>
     <hr>
 
     <loader :show="filteredToys.length === 0" />
