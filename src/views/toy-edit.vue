@@ -12,7 +12,11 @@
       </el-form-item>
 
       <el-form-item label="Labels">
-        <dropdown-select v-model="toy.labels" />
+        <el-select multiple v-model="toy.labels" placeholder="Select..">
+          <el-option v-for="option in labelOptions" :key="option" :value="option">
+            {{ option }}
+          </el-option>
+        </el-select>
       </el-form-item>
 
       <el-form-item label="In Stock">
@@ -26,13 +30,13 @@
 
 <script>
 import { utilService } from '../services/util.service.js'
-import { toyService } from '../services/toy.service.js'
+import { toyService, LABELS } from '../services/toy.service.js'
 import { showSuccessMsg } from '../services/event-bus.service.js'
 
 import loader from '../cmps/loader.vue'
-import dropdownSelect from '../cmps/dropdown-select.vue'
 
 export default {
+  components: { loader },
   data() {
     return {
       toy: toyService.getEmptyToy(),
@@ -68,11 +72,10 @@ export default {
     },
     getBtnText() {
       return this.toyId ? 'Save' : 'Add'
+    },
+    labelOptions() {
+      return LABELS
     }
-  },
-  components: {
-    loader,
-    dropdownSelect
   }
 }
 </script>
