@@ -4,39 +4,62 @@
       <h1>{{ toy.name }}</h1>
     </template>
     <img src="../../assets/img/toy.jpg" alt="toy" class="toy-img">
-    <p>Price: {{ toy.price }}</p>
+    <div class="price">
+      <span>Price: {{ formattedCurrency }}</span>
+      <span :class="inStockClass">{{ stockLbl }}</span>
+    </div>
     <section class="labels">
-      <el-button v-for="label in toy.labels">{{ label }}</el-button>
+      <el-tag type="info" v-for="label in toy.labels">{{ label }}</el-tag>
     </section>
+    <el-divider><el-icon><MoreFilled /></el-icon></el-divider>
     <section class="toy-actions">
-      <router-link :to="toyLink"><el-link type="info">Details</el-link></router-link>
-      <router-link :to="editLink"><el-link type="warning">Edit</el-link></router-link>
-      <el-link type="danger" :icon="deleteIcon" @click.prevent="$emit('remove', toy._id)" />
+      <router-link :to="toyLink"><el-link type="info" :icon="icons.Reading" /></router-link>
+      <router-link :to="editLink"><el-link type="warning" :icon="icons.Edit" /></router-link>
+      <el-link type="danger" :icon="icons.Delete" @click.prevent="$emit('remove', toy._id)" />
     </section>
   </el-card>
 </template>
 
 <script>
-import { Delete } from '@element-plus/icons-vue'
+import { Delete, Edit, Reading, MoreFilled } from '@element-plus/icons-vue'
 
 export default {
-  props: {
-    toy: Object
-  },
+  props: { toy: Object },
+  components: { MoreFilled },
   methods: {
     formattedDate(timestamp) {
       return new Date(timestamp).toLocaleTimeString()
     }
   },
   computed: {
+    icons() {
+      return {
+        Delete,
+        Edit,
+        Reading
+      }
+    },
     toyLink() {
       return '/toy/' + this.toy._id
     },
     editLink() {
       return '/toy/edit/' + this.toy._id
     },
-    deleteIcon() {
-      return Delete
+    stockLbl() {
+      return this.toy.inStock ? 'In-stock' : 'Out-of-stock'
+    },
+    inStockClass() {
+      return {
+        'in-stock': this.toy.inStock,
+        'out-of-stock': !this.toy.inStock,
+      }
+    },
+    formattedCurrency() {
+      const price = this.toy.price
+      return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD'
+      }).format(price)
     }
   }
 }
