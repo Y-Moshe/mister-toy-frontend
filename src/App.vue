@@ -19,6 +19,9 @@ export default {
     appHeader,
     appFooter,
     userMsg
+  },
+  created() {
+    this.$store.dispatch({ type: 'loadUser' })
   }
 }
 
