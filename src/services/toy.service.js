@@ -16,14 +16,6 @@ function query() {
 
 function getById(id) {
   return httpService.get('toy/' + id)
-    .then(toy => {
-      toy.reviews = [
-        { _id: utilService.makeId(), text: 'Awesome toy!' },
-        { _id: utilService.makeId(), text: 'Awesome toy!' }
-      ]
-
-      return toy
-    })
 }
 
 function remove(id) {
