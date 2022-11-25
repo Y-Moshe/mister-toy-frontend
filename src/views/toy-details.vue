@@ -5,7 +5,7 @@
       <p>ID: {{ toy._id }}</p>
       <p>Name: {{ toy.name }}</p>
       <p>Price: {{ toy.price }}</p>
-      <p>Labels: {{ toy.labels }}</p>
+      <p>Tags: {{ toy.tags }}</p>
       <p>In Stock: {{ toy.inStock }}</p>
       <p>Created At: {{ getCreatedAt(toy.createdAt) }}</p>
       <hr>

@@ -11,9 +11,9 @@
         <el-input type="number" v-model="toy.price" />
       </el-form-item>
 
-      <el-form-item label="Labels">
-        <el-select multiple v-model="toy.labels" placeholder="Select..">
-          <el-option v-for="option in labelOptions" :key="option" :value="option">
+      <el-form-item label="Tags">
+        <el-select multiple v-model="toy.tags" placeholder="Select..">
+          <el-option v-for="option in tagsOptions" :key="option" :value="option">
             {{ option }}
           </el-option>
         </el-select>
@@ -30,7 +30,7 @@
 
 <script>
 import { utilService } from '../services/util.service.js'
-import { toyService, LABELS } from '../services/toy.service.js'
+import { toyService, TAGS } from '../services/toy.service.js'
 import { showSuccessMsg } from '../services/event-bus.service.js'
 
 import loader from '../cmps/loader.vue'
@@ -73,8 +73,8 @@ export default {
     getBtnText() {
       return this.toyId ? 'Save' : 'Add'
     },
-    labelOptions() {
-      return LABELS
+    tagsOptions() {
+      return TAGS
     }
   }
 }

@@ -3,11 +3,11 @@
     <p>{{ placeholder }}</p>
     <Transition name="fade-down">
       <div class="items" v-if="isOpen">
-        <div v-rainbow v-for="item in labels" :key="item.label" class="item">
+        <div v-rainbow v-for="item in tagsOptions" :key="item.tag" class="item">
           <el-checkbox
-            :label="item.label"
+            :label="item.tag"
             :checked="item.isChecked"
-            @change="handleCheckboxChange(item.label, $event)"
+            @change="handleCheckboxChange(item.tag, $event)"
             @click.stop
           />
         </div>
@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { LABELS } from '../services/toy.service.js'
+import { TAGS } from '../services/toy.service.js'
 import { utilService } from '../services/util.service'
 
 export default {
@@ -34,24 +34,24 @@ export default {
     toggleDropdown() {
       this.isOpen = !this.isOpen
     },
-    handleCheckboxChange(label, { target }) {
+    handleCheckboxChange(tag, { target }) {
       const modelValue = utilService.deepCopy(this.modelValue)
-      const labelIdx = modelValue.indexOf(label)
+      const tagIdx = modelValue.indexOf(tag)
 
-      if (target.checked && labelIdx === -1) modelValue.push(label)
-      else modelValue.splice(labelIdx, 1)
+      if (target.checked && tagIdx === -1) modelValue.push(tag)
+      else modelValue.splice(tagIdx, 1)
 
       this.$emit('update:modelValue', modelValue)
     }
   },
   computed: {
-    labels() {
-      return LABELS.map(lbl => ({ isChecked: this.modelValue.includes(lbl), label: lbl }))
+    tagsOptions() {
+      return TAGS.map(lbl => ({ isChecked: this.modelValue.includes(lbl), tag: lbl }))
     },
     placeholder() {
       return this.modelValue.length > 0
         ? this.modelValue.toString()
-        : 'Select labels'
+        : 'Select tags'
     }
   }
 }

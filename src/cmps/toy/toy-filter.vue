@@ -18,17 +18,17 @@
         />
       </el-form-item>
 
-      <el-form-item label="Labels">
+      <el-form-item label="Tags">
         <el-select
           multiple
-          :modelValue="filterBy.labels"
-          @update:modelValue="$emit('change', 'labels', $event)"
+          :modelValue="filterBy.tags"
+          @update:modelValue="$emit('change', 'tags', $event)"
           placeholder="Select">
           <el-option
-            v-for="label in labelOptions"
-            :key="label"
-            :label="label"
-            :value="label"
+            v-for="tag in tagsOptions"
+            :key="tag"
+            :label="tag"
+            :value="tag"
           />
         </el-select>
       </el-form-item>
@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import { LABELS } from '../../services/toy.service'
+import { TAGS } from '../../services/toy.service'
 
 export default {
   props: { filterBy: Object },
@@ -60,8 +60,8 @@ export default {
     sortOptions() {
       return ['Name', 'Price', 'Created']
     },
-    labelOptions() {
-      return LABELS
+    tagsOptions() {
+      return TAGS
     }
   }
 }

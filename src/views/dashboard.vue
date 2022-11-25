@@ -14,7 +14,7 @@
 
 <script>
 import { utilService } from '../services/util.service'
-import { LABELS } from '../services/toy.service'
+import { TAGS } from '../services/toy.service'
 
 import awesomeBarChart from '../cmps/charts/awesome-bar-chart.vue'
 import awesomePieChart from '../cmps/charts/awesome-pie-chart.vue'
@@ -27,7 +27,7 @@ export default {
   data() {
     return {
       barChartData: {
-        labels: [...LABELS],
+        labels: [...TAGS],
         datasets: [
           {
             data: [],
@@ -63,7 +63,7 @@ export default {
     loadBarDataset() {
       // Bar chart
       const dataset = this.barChartData.labels.map(lbl => {
-        const toysWithCurrLbl = this.toys.filter(toy => toy.labels.includes(lbl))
+        const toysWithCurrLbl = this.toys.filter(toy => toy.tags.includes(lbl))
         const sumOfPricesOfCurrLbl = toysWithCurrLbl
           .reduce((prev, curr) => {
             return curr.price + prev

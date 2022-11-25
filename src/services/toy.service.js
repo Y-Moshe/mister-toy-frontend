@@ -1,7 +1,7 @@
 import { utilService } from './util.service.js'
 import { httpService } from './http.service.js'
 
-export const LABELS = ['On wheels', 'Box game', 'Art', 'Baby', 'Doll', 'Puzzle', 'Outdoor']
+export const TAGS = ['On wheels', 'Box game', 'Art', 'Baby', 'Doll', 'Puzzle', 'Outdoor']
 export const toyService = {
   query,
   getById,
@@ -39,7 +39,7 @@ function getEmptyToy() {
     _id: '',
     name: '',
     price: 0,
-    labels: [],
+    tags: [],
     createdAt: 0,
     inStock: false
   }

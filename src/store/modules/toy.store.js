@@ -10,7 +10,7 @@ export const toyModule = {
         // page: 0,
         // itemsPerPage: 6,
         inStock: true,
-        labels: [],
+        tags: [],
         sortBy: 'Name'
       }
     }
@@ -70,8 +70,8 @@ export const toyModule = {
     filteredToys({ toys, filterBy }) {
       const regex = new RegExp(filterBy.keyword, 'i')
       let filteredToys = toys.filter(toy => regex.test(toy.name)) // By name
-      if (filterBy.labels.length > 0) // By labels
-        filteredToys = filteredToys.filter(toy => toy.labels.some(lbl => filterBy.labels.includes(lbl)))
+      if (filterBy.tags.length > 0) // By tags
+        filteredToys = filteredToys.filter(toy => toy.tags.some(lbl => filterBy.tags.includes(lbl)))
 
       filteredToys.sort((a, b) => {
         if (filterBy.sortBy === 'Created') return a.createdAt - b.createdAt

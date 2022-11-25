@@ -3,13 +3,13 @@
     <template #header>
       <h1>{{ toy.name }}</h1>
     </template>
-    <img src="../../assets/img/toy.jpg" alt="toy" class="toy-img">
+    <img :src="toy.imgUrl" alt="toy" class="toy-img">
     <div class="price">
       <span>Price: {{ formattedCurrency }}</span>
       <span :class="inStockClass">{{ stockLbl }}</span>
     </div>
-    <section class="labels">
-      <el-tag type="info" v-for="label in toy.labels">{{ label }}</el-tag>
+    <section class="tags">
+      <el-tag type="info" v-for="tag in toy.tags">{{ tag }}</el-tag>
     </section>
     <el-divider><el-icon><MoreFilled /></el-icon></el-divider>
     <section class="toy-actions">
