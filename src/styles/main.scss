@@ -1,25 +1,27 @@
-/* Setup */
+// Setup
 @import './setup/_functions.scss';
 @import './setup/_mixins.scss';
 @import './setup/_typography.scss';
 @import './setup/_variables.scss';
 
-/* Basics */
+// Basics
 @import './basics/_base.scss';
 @import './basics/_helpers.scss';
 @import './basics/_layout.scss';
 
-/* Components */
+// Components
 @import './cmps/loader.scss';
 @import './cmps/pagination.scss';
 @import './cmps/dropdown-select.scss';
 
-@import './cmps/app-toy.scss';
 @import './cmps/toy/toy-filter.scss';
 @import './cmps/toy/toy-list.scss';
 @import './cmps/toy/toy-preview.scss';
 
-@import './cmps/dashboard.scss';
+// Views
+@import './cmps/views/app-toy-view.scss';
+@import './cmps/views/dashboard-view.scss';
+@import './cmps/views/auth-view.scss';
 
 .main-app {
     min-height: 100vh;

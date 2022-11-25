@@ -1,0 +1,15 @@
+$break: 768px;
+
+.auth-view {
+  width: 100%;
+  display: flex;
+
+  & form {
+    width: 100%;
+
+    @media (min-width: $break) {
+      margin: auto;
+      width: 40%;
+    }
+  } 
+}
