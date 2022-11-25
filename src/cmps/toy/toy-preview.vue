@@ -14,15 +14,17 @@
     <el-divider><el-icon><MoreFilled /></el-icon></el-divider>
     <section class="toy-actions">
       <router-link :to="toyLink"><el-link type="info" :icon="icons.Reading" /></router-link>
-      <router-link :to="editLink"><el-link type="warning" :icon="icons.Edit" /></router-link>
-      <el-popconfirm
-        :icon="null"
-        title="Are you sure to delete this toy?"
-        @confirm="$emit('remove', toy._id)">
-        <template #reference>
-          <el-link type="danger" :icon="icons.Delete" @click.prevent />
-        </template>
-      </el-popconfirm>
+      <template v-if="user?.isAdmin">
+        <router-link :to="editLink"><el-link type="warning" :icon="icons.Edit" /></router-link>
+        <el-popconfirm
+          :icon="null"
+          title="Are you sure to delete this toy?"
+          @confirm="$emit('remove', toy._id)">
+          <template #reference>
+            <el-link type="danger" :icon="icons.Delete" @click.prevent />
+          </template>
+        </el-popconfirm>
+      </template>
     </section>
   </el-card>
 </template>
@@ -45,6 +47,9 @@ export default {
         Edit,
         Reading
       }
+    },
+    user() {
+      return this.$store.getters.user
     },
     toyLink() {
       return '/toy/' + this.toy._id
