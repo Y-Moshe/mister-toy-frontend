@@ -7,7 +7,9 @@ export const toyService = {
   getById,
   remove,
   save,
-  getEmptyToy
+  getEmptyToy,
+  addReview,
+  removeReview
 }
 
 function query() {
@@ -26,6 +28,14 @@ function save(toy) {
   return toy._id
     ? httpService.put('toy/' + toy._id, toy)
     : httpService.post('toy', toy)
+}
+
+function addReview(toyId, review) {
+  return httpService.post('toy/' + toyId + '/review', { review })
+}
+
+function removeReview(toyId, reviewId) {
+  return httpService.delete('toy/' + toyId + '/review/' + reviewId)
 }
 
 function getEmptyToy() {
