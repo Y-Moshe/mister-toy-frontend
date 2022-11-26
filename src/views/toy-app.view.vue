@@ -20,8 +20,8 @@
 </template>
 
 <script>
+import { ElMessage } from 'element-plus'
 import { utilService } from '../services/util.service.js'
-import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
 
 import toyList from '../cmps/toy/toy-list.vue'
 import toyFilter from '../cmps/toy/toy-filter.vue'
@@ -36,8 +36,8 @@ export default {
   methods: {
     removeToy(toyId) {
       this.$store.dispatch({ type: 'removeToy', toyId })
-        .then(() => showSuccessMsg(`Toy ${toyId} removed successfully!`))
-        .catch(() => showErrorMsg(`Failed to remove ${toyId}`))
+        .then(() => ElMessage.success(`Toy ${toyId} removed successfully!`))
+        .catch(() => ElMessage.error(`Failed to remove ${toyId}`))
     },
     changeFilter(name, value) {
       const target = { name, value }

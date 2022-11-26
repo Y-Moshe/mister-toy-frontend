@@ -33,9 +33,10 @@
 </template>
 
 <script>
+import { ElMessage } from 'element-plus'
+
 import { utilService } from '../services/util.service.js'
 import { toyService, TAGS } from '../services/toy.service.js'
-import { showSuccessMsg } from '../services/event-bus.service.js'
 
 import loader from '../cmps/loader.vue'
 
@@ -54,7 +55,7 @@ export default {
           this.toy = utilService.deepCopy(toy)
           this.isLoading = false
         })
-        .catch(() => showErrorMsg(`Failed to load the toy ${this.toyId}!`))
+        .catch(() => ElMessage.error(`Failed to load the toy ${this.toyId}!`))
     } else {
       this.isLoading = false
     }
@@ -64,10 +65,10 @@ export default {
       if (!this.toyId) this.toy.createdAt = Date.now()
       this.$store.dispatch({ type: 'saveToy', toy: this.toy })
         .then(() => {
-          showSuccessMsg('The toy saved successfully!')
+          ElMessage.success('The toy saved successfully!')
           this.$router.push('/')
         })
-        .catch(() => showSuccessMsg('Failed to save the toy'))
+        .catch(() => ElMessage.error('Failed to save the toy'))
     }
   },
   computed: {

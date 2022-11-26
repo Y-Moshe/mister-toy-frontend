@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { showErrorMsg } from '../services/event-bus.service.js'
+import { ElMessage } from 'element-plus'
 import { toyService } from '../services/toy.service.js'
 
 import loader from '../cmps/loader.vue'
@@ -31,7 +31,7 @@ export default {
   created() {
     toyService.getById(this.toyId)
       .then(toy => this.toy = toy)
-      .catch(() => showErrorMsg(`Failed to load the toy ${this.toyId}!`))
+      .catch(() => ElMessage.error(`Failed to load the toy ${this.toyId}!`))
   },
   methods: {
     getCreatedAt(timestamp) {
