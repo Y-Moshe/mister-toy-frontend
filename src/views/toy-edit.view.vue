@@ -7,6 +7,10 @@
         <el-input type="text" v-model="toy.name" v-focus />
       </el-form-item>
 
+      <el-form-item label="Img URL">
+        <el-input type="text" v-model="toy.imgUrl" />
+      </el-form-item>
+
       <el-form-item label="Price">
         <el-input type="number" v-model="toy.price" />
       </el-form-item>

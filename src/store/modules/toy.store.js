@@ -53,7 +53,10 @@ export const toyModule = {
     },
     saveToy({ commit }, { toy }) {
       return toyService.save(toy)
-        .then(() => commit('saveToy', toy))
+        .then(({ upsertedId }) => {
+          if (upsertedId) toy._id = upsertedId
+          commit('saveToy', toy)
+        })
         .catch(err => {
           console.log('err from saveToy')
           throw err

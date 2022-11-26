@@ -23,16 +23,20 @@ function remove(id) {
 }
 
 function save(toy) {
-  return httpService.post('toy', toy)
+  return toy._id
+    ? httpService.put('toy/' + toy._id, toy)
+    : httpService.post('toy', toy)
 }
 
 function getEmptyToy() {
   return {
     _id: '',
     name: '',
+    imgUrl: '',
     price: 0,
     tags: [],
     createdAt: 0,
+    reviews: [],
     inStock: false
   }
 }
