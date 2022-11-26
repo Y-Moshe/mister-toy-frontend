@@ -1,7 +1,7 @@
 <template>
   <section class="toy-app">
     <toy-filter :filterBy="filterBy" @change="changeFilter" />
-    <div class="add-toy">
+    <div class="add-toy" v-if="user?.isAdmin">
       <router-link to="/toy/edit">Add a toy +</router-link>
     </div>
     <hr>
@@ -60,6 +60,9 @@ export default {
     },
     filteredToys() {
       return this.$store.getters.filteredToys
+    },
+    user() {
+      return this.$store.getters.user
     },
     // totalPages() {
     //   return this.$store.getters.totalPages
