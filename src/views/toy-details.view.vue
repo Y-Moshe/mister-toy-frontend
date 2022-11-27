@@ -1,32 +1,48 @@
 <template>
   <section class="toy-details">
     <loader :show="!toy" />
-    <div v-if="toy">
-      <p>ID: {{ toy._id }}</p>
-      <p>Name: {{ toy.name }}</p>
-      <p>Price: {{ toy.price }}</p>
-      <p>Tags: {{ toy.tags }}</p>
-      <p>In Stock: {{ toy.inStock }}</p>
-      <p>Created At: {{ getCreatedAt(toy.createdAt) }}</p>
+
+    <section v-if="toy">
+      <small>ID: {{ toy._id }}</small>
+      <h1>{{ toy.name }}</h1>
+      <div class="img-wrapper">
+        <el-image :src="toy.imgUrl" loading="eager" />
+        <div class="tags">
+          <el-tag type="info" v-for="tag in toy.tags">{{ tag }}</el-tag>
+        </div>
+      </div>
+      <div class="flex space-between">
+        <span>Price: {{ formattedCurrency }}</span>
+        <div class="flex gap-10">
+          <span :class="inStockClass">{{ stockLbl }}</span>
+          <span>Created At: {{ formattedDate }}</span>
+        </div>
+      </div>
+
       <hr>
-      <el-form :model="form">
-        <el-input type="text" v-model="form.txt" />
-        <el-button type="success" @click="submitReview">Add a review</el-button>
+
+      <el-form :model="form" :disabled="isLoading">
+        <el-form-item label="Add Review">
+          <el-col :span="16">
+            <el-input type="text" v-model="form.txt" />
+          </el-col>
+          <el-col :offset="1" :span="4">
+            <el-button type="success" @click="submitReview" class="w-100" :loading="isLoading">Post</el-button>
+          </el-col>
+        </el-form-item>
       </el-form>
       <hr>
-      <ul class="clean-list">
-        <li v-for="review in toy.reviews" :key="review._id">
-          <p>{{ review.txt }}</p>
-          <el-button v-if="user?.isAdmin" type="danger" @click="removeReview(review._id)">Remove review</el-button>
-        </li>
-      </ul>
-    </div>
+
+      <review-list :reviews="toy.reviews" />
+
+    </section>
   </section>
 </template>
 
 <script>
 import { ElMessage } from 'element-plus'
 import { toyService } from '../services/toy.service.js'
+import reviewList from '../cmps/review/review-list.vue'
 
 import loader from '../cmps/loader.vue'
 
@@ -36,7 +52,8 @@ export default {
       toy: null,
       form: {
         txt: ''
-      }
+      },
+      isLoading: false
     }
   },
   created() {
@@ -45,10 +62,9 @@ export default {
       .catch(() => ElMessage.error(`Failed to load the toy ${this.toyId}!`))
   },
   methods: {
-    getCreatedAt(timestamp) {
-      return new Date(timestamp).toLocaleTimeString()
-    },
     submitReview() {
+      this.isLoading = true
+
       toyService.addReview(this.toyId, this.form.txt)
         .then(({ _id }) => {
           const review = {
@@ -62,6 +78,7 @@ export default {
           this.form.txt = ''
         })
         .catch(() => ElMessage.error('Failed to add your review'))
+        .finally(() => this.isLoading = false)
       },
     removeReview(reviewId) {
       toyService.removeReview(this.toyId, reviewId)
@@ -71,19 +88,36 @@ export default {
 
           ElMessage.success('Review successfully removed!')
         })
-        .catch(() => ElMessage.error('Failed to remove your review'))        
+        .catch(() => ElMessage.error('Failed to remove your review'))
     }
   },
   computed: {
     toyId() {
       return this.$route.params.id
     },
-    user() {
-      return this.$store.getters.user
+    formattedDate() {
+      return new Date(this.toy.createdAt).toLocaleTimeString()
+    },
+    inStockClass() {
+      return {
+        'in-stock': this.toy.inStock,
+        'out-of-stock': !this.toy.inStock
+      }
+    },
+    stockLbl() {
+      return this.toy.inStock ? 'In-stock' : 'Out-of-stock'
+    },
+    formattedCurrency() {
+      const price = this.toy.price
+      return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD'
+      }).format(price)
     }
   },
   components: {
-    loader
+    loader,
+    reviewList
   }
 }
 </script>
