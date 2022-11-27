@@ -22,7 +22,10 @@
 
       <el-form-item>
         <el-col :offset="6" :span="12">
-          <el-image :src="toy.imgUrl" :loading="isImgUploading" />
+          <el-image
+            v-if="/[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/.test(toy.imgUrl)"
+            :src="toy.imgUrl"
+            loading="eager" />
         </el-col>
       </el-form-item>
 
