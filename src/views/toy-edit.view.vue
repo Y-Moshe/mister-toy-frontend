@@ -8,7 +8,22 @@
       </el-form-item>
 
       <el-form-item label="Img URL">
-        <el-input type="text" v-model="toy.imgUrl" />
+        <el-col :span="6">
+          <el-input type="text" v-model="toy.imgUrl" :disabled="isImgUploading" />
+        </el-col>
+        <el-col :offset="1" :span="1">
+          <label>Or</label>
+        </el-col>
+        <el-col :span="3">
+          <input type="file" ref="fileRef" @change="handleUpload" hidden />
+          <el-button type="primary" class="mr-1" @click="$refs.fileRef.click()" :loading="isImgUploading">Upload file</el-button>
+        </el-col>
+      </el-form-item>
+
+      <el-form-item>
+        <el-col :offset="6" :span="12">
+          <el-image :src="toy.imgUrl" :loading="isImgUploading" />
+        </el-col>
       </el-form-item>
 
       <el-form-item label="Price">
@@ -36,6 +51,7 @@
 import { ElMessage } from 'element-plus'
 
 import { utilService } from '../services/util.service.js'
+import { uploadService } from '../services/upload.service'
 import { toyService, TAGS } from '../services/toy.service.js'
 
 import loader from '../cmps/loader.vue'
@@ -45,7 +61,8 @@ export default {
   data() {
     return {
       toy: toyService.getEmptyToy(),
-      isLoading: true
+      isLoading: true,
+      isImgUploading: false
     }
   },
   created() {
@@ -69,6 +86,16 @@ export default {
           this.$router.push('/')
         })
         .catch(() => ElMessage.error('Failed to save the toy'))
+    },
+    handleUpload(ev) {
+      this.isImgUploading = true
+      uploadService.uploadImg(ev)
+        .then(url => {
+          this.toy.imgUrl = url
+          ElMessage.success('Image uploaded successfully!(required to save toy)')
+        })
+        .catch(() => ElMessage.error('Failed to upload img!'))
+        .finally(() => this.isImgUploading = false)
     }
   },
   computed: {
