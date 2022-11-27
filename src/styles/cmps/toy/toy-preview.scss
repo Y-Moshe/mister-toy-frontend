@@ -20,9 +20,6 @@
         justify-content: space-between;
     }
 
-    & .el-card__body .price span.in-stock { color: green; }
-    & .el-card__body .price span.out-of-stock { color: red; }
-
     & .el-card__body {
         flex-grow: 1;
         display: flex;
