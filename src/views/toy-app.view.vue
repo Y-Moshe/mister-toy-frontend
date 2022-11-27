@@ -6,8 +6,8 @@
     </div>
     <hr>
 
-    <loader :show="filteredToys.length === 0" />
-    <toy-list :toys="filteredToys" @remove="removeToy" />
+    <loader :show="toys.length === 0" />
+    <toy-list :toys="toys" @remove="removeToy" />
 
     <!-- <pagination
       :page="filterBy.page"
@@ -58,8 +58,8 @@ export default {
     filterBy() {
       return this.$store.getters.filterBy
     },
-    filteredToys() {
-      return this.$store.getters.filteredToys
+    toys() {
+      return this.$store.getters.toys
     },
     user() {
       return this.$store.getters.user

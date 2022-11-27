@@ -1,5 +1,13 @@
 import { authService } from '../../services/auth.service.js'
 
+export const mutations = {
+  setUser: user => ({ type: 'setUser', user }),
+}
+
+export const actions = {
+  setUser: user => ({ type: 'loadUser' }),
+}
+
 export const userModule = {
   state() {
     return {
@@ -14,7 +22,7 @@ export const userModule = {
   actions: {
     loadUser({ commit }) {
       authService.getLoggedinUser()
-        .then(user => commit({ type: 'setUser', user }))
+        .then(user => commit(mutations.setUser(user)))
         .catch(() => console.log('[loadUser] Cannot load user'))
     }
   },
