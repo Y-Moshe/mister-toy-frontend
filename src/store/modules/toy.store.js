@@ -22,7 +22,7 @@ export const toyModule = {
         keyword: '',
         // page: 0,
         // itemsPerPage: 6,
-        inStock: 'All',
+        status: '',
         tags: [],
         sortBy: 'Name'
       }

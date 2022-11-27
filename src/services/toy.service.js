@@ -1,4 +1,3 @@
-import { utilService } from './util.service.js'
 import { httpService } from './http.service.js'
 
 export const TAGS = ['On wheels', 'Box game', 'Art', 'Baby', 'Doll', 'Puzzle', 'Outdoor']
@@ -12,8 +11,8 @@ export const toyService = {
   removeReview
 }
 
-function query() {
-  return httpService.get('toy')
+function query(filterBy) {
+  return httpService.get('toy', filterBy)
 }
 
 function getById(id) {

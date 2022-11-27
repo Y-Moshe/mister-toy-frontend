@@ -82,7 +82,7 @@ export default {
     },
     loadPieDataset() {
       const dataset = this.pieChartData.labels.map(lbl => {
-        const isInStock = lbl === 'In Stock'
+        const isInStock = lbl === 'In Stock' ? true : false
 
         const totalToys = this.toys.length
         const count = this.toys

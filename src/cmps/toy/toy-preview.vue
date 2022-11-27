@@ -63,7 +63,7 @@ export default {
     inStockClass() {
       return {
         'in-stock': this.toy.inStock,
-        'out-of-stock': !this.toy.inStock,
+        'out-of-stock': !this.toy.inStock
       }
     },
     formattedCurrency() {

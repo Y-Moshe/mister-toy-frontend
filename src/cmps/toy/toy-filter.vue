@@ -12,10 +12,14 @@
       </el-form-item>
 
       <el-form-item label="In Stock">
-        <el-checkbox
-          :checked="filterBy.inStock"
-          @change="$emit('change', 'inStock', $event)"
-        />
+        <el-select
+          :modelValue="filterBy.status"
+          @update:modelValue="$emit('change', 'status', $event)"
+          placeholder="Select stock">
+          <el-option value="">All</el-option>
+          <el-option value="In-stock">In-stock</el-option>
+          <el-option value="Out-of-Stock">Out-of-stock</el-option>
+        </el-select>
       </el-form-item>
 
       <el-form-item label="Tags">
@@ -23,7 +27,7 @@
           multiple
           :modelValue="filterBy.tags"
           @update:modelValue="$emit('change', 'tags', $event)"
-          placeholder="Select">
+          placeholder="Select tags">
           <el-option
             v-for="tag in tagsOptions"
             :key="tag"
@@ -58,7 +62,7 @@ export default {
   props: { filterBy: Object },
   computed: {
     sortOptions() {
-      return ['Name', 'Price', 'Created']
+      return ['Name', 'Price']
     },
     tagsOptions() {
       return TAGS
