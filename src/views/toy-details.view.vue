@@ -27,27 +27,36 @@
             <el-input type="text" v-model="form.txt" />
           </el-col>
           <el-col :offset="1" :span="4">
-            <el-button type="success" @click="submitReview" class="w-100" :loading="isLoading">Post</el-button>
+            <el-button type="success" @click="handleSubmitReview" class="w-100" :loading="isLoading">Post</el-button>
           </el-col>
         </el-form-item>
       </el-form>
       <hr>
 
-      <review-list :reviews="toy.reviews" @remove="removeReview" />
+      <review-list :reviews="toy.reviews" @remove="handleRemoveReview" />
 
     </section>
+    <chat-btn />
   </section>
 </template>
 
 <script>
 import { ElMessage } from 'element-plus'
 import { toyService } from '../services/toy.service.js'
+import { socketService } from '../services/socket.service'
+
 import { reviewService } from '../services/review.service'
 import reviewList from '../cmps/review/review-list.vue'
 
 import loader from '../cmps/loader.vue'
+import chatBtn from '../cmps/chat-btn.vue'
 
 export default {
+  components: {
+    loader,
+    reviewList,
+    chatBtn
+  },
   data() {
     return {
       toy: null,
@@ -58,12 +67,25 @@ export default {
     }
   },
   created() {
+    const { emits, events } = socketService
+    socketService.emit(emits.SOCKET_EMIT_SET_TOPIC, this.toyId)
+    socketService.on(events.SOCKET_EVENT_REVIEW_ADDED, this.reviewAdded)
+    socketService.on(events.SOCKET_EVENT_REVIEW_REMOVED, this.removeReview)
+
     toyService.getById(this.toyId)
       .then(toy => this.toy = toy)
       .catch(() => ElMessage.error(`Failed to load the toy ${this.toyId}!`))
   },
   methods: {
-    submitReview() {
+    reviewAdded(review) {
+      this.toy.reviews.push(review)
+      ElMessage.success('New review added!')
+    },
+    removeReview(reviewId) {
+      const reviewIdx = this.toy.reviews.find(rev => rev._id === reviewId)
+      this.toy.reviews.splice(reviewIdx, 1)
+    },
+    handleSubmitReview() {
       this.isLoading = true
       const reviewToSave = {
         toyId: this.toyId,
@@ -80,12 +102,11 @@ export default {
         .catch(() => ElMessage.error('Failed to add your review'))
         .finally(() => this.isLoading = false)
     },
-    removeReview(reviewId) {
+    handleRemoveReview(reviewId) {
       reviewService.remove(reviewId)
         .then(res => {
           console.log('res', res)
-          const reviewIdx = this.toy.reviews.find(rev => rev._id === reviewId)
-          this.toy.reviews.splice(reviewIdx, 1)
+          this.removeReview(reviewId)
 
           ElMessage.success('Review successfully removed!')
         })
@@ -118,10 +139,6 @@ export default {
         currency: 'USD'
       }).format(price)
     }
-  },
-  components: {
-    loader,
-    reviewList
   }
 }
 </script>
