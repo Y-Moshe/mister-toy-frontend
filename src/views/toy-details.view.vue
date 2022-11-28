@@ -33,7 +33,7 @@
       </el-form>
       <hr>
 
-      <review-list :reviews="toy.reviews" />
+      <review-list :reviews="toy.reviews" @remove="removeReview" />
 
     </section>
   </section>
@@ -42,6 +42,7 @@
 <script>
 import { ElMessage } from 'element-plus'
 import { toyService } from '../services/toy.service.js'
+import { reviewService } from '../services/review.service'
 import reviewList from '../cmps/review/review-list.vue'
 
 import loader from '../cmps/loader.vue'
@@ -64,14 +65,14 @@ export default {
   methods: {
     submitReview() {
       this.isLoading = true
+      const reviewToSave = {
+        userId: this.user._id,
+        toyId: this.toyId,
+        txt: this.form.txt
+      }
 
-      toyService.addReview(this.toyId, this.form.txt)
-        .then(({ _id }) => {
-          const review = {
-            _id,
-            txt: this.form.txt
-          }
-
+      reviewService.add(reviewToSave)
+        .then(review => {
           this.toy.reviews.push(review)
           ElMessage.success('Review added successfully!')
 
@@ -79,10 +80,11 @@ export default {
         })
         .catch(() => ElMessage.error('Failed to add your review'))
         .finally(() => this.isLoading = false)
-      },
+    },
     removeReview(reviewId) {
-      toyService.removeReview(this.toyId, reviewId)
-        .then(() => {
+      reviewService.remove(reviewId)
+        .then(res => {
+          console.log('res', res)
           const reviewIdx = this.toy.reviews.find(rev => rev._id === reviewId)
           this.toy.reviews.splice(reviewIdx, 1)
 
@@ -94,6 +96,9 @@ export default {
   computed: {
     toyId() {
       return this.$route.params.id
+    },
+    user() {
+      return this.$store.getters.user
     },
     formattedDate() {
       return new Date(this.toy.createdAt).toLocaleTimeString()
