@@ -9,7 +9,7 @@
     </router-link>
 
     <p>{{ review.txt }}</p>
-    <el-button v-if="user?.isAdmin" type="danger" @click="removeReview(review._id)" size="small" :icon="deleteIcon" />
+    <el-button v-if="user?.isAdmin" type="danger" @click="$emit('remove', review._id)" size="small" :icon="deleteIcon" />
   </article>
 </template>
 
