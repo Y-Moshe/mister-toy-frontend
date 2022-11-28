@@ -4,7 +4,7 @@
     <router-link to="/">
       <div class="profile">
         <el-image src="src/assets/img/profile.png" alt="profile img" class="review-profile-img" />
-        <span>{{ user.fullname }}</span>
+        <span>{{ user?.fullname }}</span>
       </div>
     </router-link>
 
