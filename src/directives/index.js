@@ -22,10 +22,8 @@ export const clickOutsideDirective = {
           clientY > top &&
           clientY < top + height)
       ) {
+
         cb()
-        console.log('outside')
-      } else {
-        console.log('inside')
       }
     }
     setTimeout(() => {
