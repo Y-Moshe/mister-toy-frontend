@@ -24,7 +24,6 @@ async function login(credentials) {
 async function signup(userInfo) {
   try {
     const user = await httpService.post('auth/signup', userInfo)
-    console.log('user from signup', user)
     utilService.saveToStorage(STORAGE_KEY_LOGGEDIN, user)
 
     return user
@@ -43,5 +42,5 @@ async function logout() {
 }
 
 function getLoggedinUser() {
-  return Promise.resolve(utilService.loadFromStorage(STORAGE_KEY_LOGGEDIN))
+  return utilService.loadFromStorage(STORAGE_KEY_LOGGEDIN)
 }
