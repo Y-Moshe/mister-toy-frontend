@@ -66,7 +66,6 @@ export default {
     submitReview() {
       this.isLoading = true
       const reviewToSave = {
-        userId: this.user._id,
         toyId: this.toyId,
         txt: this.form.txt
       }
