@@ -1,0 +1,40 @@
+.chat-btn {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+
+  & .el-button--large {
+    font-size: rem(34px);
+    padding: rem(24px);
+  }
+
+  & .chat-content {
+    overflow-y: scroll;
+  }
+
+  & .chat-box {
+    $chatHeight: 400px;
+
+    position: absolute;
+    top: -(calc($chatHeight + 15px));
+    right: 0;
+    width: 350px;
+    height: $chatHeight;
+    background-color: aliceblue;
+    border-radius: 7px;
+    box-shadow: 0 0 5px gainsboro;
+    padding: 7px;
+
+
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto 50px;
+
+    & form {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+  }
+}
