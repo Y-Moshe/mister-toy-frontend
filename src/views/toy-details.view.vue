@@ -36,7 +36,7 @@
       <review-list :reviews="toy.reviews" @remove="handleRemoveReview" />
 
     </section>
-    <chat-btn />
+    <chat-btn :messages="chatMessages" @messageSend="sendChatMessage" />
   </section>
 </template>
 
@@ -63,7 +63,8 @@ export default {
       form: {
         txt: ''
       },
-      isLoading: false
+      isLoading: false,
+      chatMessages: []
     }
   },
   created() {
@@ -71,12 +72,20 @@ export default {
     socketService.emit(emits.SOCKET_EMIT_SET_TOPIC, this.toyId)
     socketService.on(events.SOCKET_EVENT_REVIEW_ADDED, this.reviewAdded)
     socketService.on(events.SOCKET_EVENT_REVIEW_REMOVED, this.removeReview)
+    socketService.on(events.SOCKET_EVENT_ADD_MSG, this.addChatMessage)
 
     toyService.getById(this.toyId)
       .then(toy => this.toy = toy)
       .catch(() => ElMessage.error(`Failed to load the toy ${this.toyId}!`))
   },
   methods: {
+    addChatMessage(msgObj) {
+      this.chatMessages.push(msgObj)
+    },
+    sendChatMessage(msg) {
+      const { emits } = socketService
+      socketService.emit(emits.SOCKET_EMIT_SEND_MSG, msg)
+    },
     reviewAdded(review) {
       this.toy.reviews.push(review)
       ElMessage.success('New review added!')
