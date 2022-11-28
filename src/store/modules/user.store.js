@@ -26,7 +26,6 @@ export const userModule = {
       if (!user) return
 
       commit(mutations.setUser(user))
-      socketService.login(user._id)
     }
   },
   getters: {
