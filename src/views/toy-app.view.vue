@@ -23,6 +23,7 @@
 import { ElMessage } from 'element-plus'
 import { utilService } from '../services/util.service.js'
 
+import { actions, mutations } from '../store/modules/toy.store'
 import toyList from '../cmps/toy/toy-list.vue'
 import toyFilter from '../cmps/toy/toy-filter.vue'
 import loader from '../cmps/loader.vue'
@@ -35,23 +36,23 @@ export default {
   },
   methods: {
     removeToy(toyId) {
-      this.$store.dispatch({ type: 'removeToy', toyId })
+      this.$store.dispatch(actions.removeToy(toyid))
         .then(() => ElMessage.success(`Toy ${toyId} removed successfully!`))
         .catch(() => ElMessage.error(`Failed to remove ${toyId}`))
     },
     changeFilter(name, value) {
       const target = { name, value }
-      this.$store.commit({ type: 'setFilterBy', target })
+      this.$store.commit(mutations.setFilterBy(target))
     },
     // goNexrPrevPage(diff) {
     //   const { page: currPage } = this.filterBy
     //   const nextPage = currPage + diff
     //   const target = { name: 'page', value: nextPage }
-    //   this.$store.commit({ type: 'setFilterBy', target })
+    //   this.$store.commit(mutations.setFilterBy(target))
     // },
     // goToPage(page) {
     //   const target = { name: 'page', value: page }
-    //   this.$store.commit({ type: 'setFilterBy', target })
+    //   this.$store.commit(mutations.setFilterBy(target))
     // },
   },
   computed: {

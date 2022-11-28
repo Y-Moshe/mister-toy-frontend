@@ -29,14 +29,14 @@ export const toyModule = {
     }
   },
   mutations: {
-    setToys(state, toys) {
+    setToys(state, { toys }) {
       state.toys = toys
     },
-    removeToy({ toys }, toyId) {
+    removeToy({ toys }, { toyId }) {
       const idx = toys.findIndex(({ _id }) => _id === toyId)
       toys.splice(idx, 1)
     },
-    saveToy({ toys }, toy) {
+    saveToy({ toys }, { toy }) {
       if (toy._id) {
         const idx = toys.findIndex(({ _id }) => _id === toy._id)
         toys[idx] = toy
@@ -52,7 +52,7 @@ export const toyModule = {
   actions: {
     loadToys({ commit, getters }) {
       return toyService.query(getters.filterBy)
-        .then(results => commit('setToys', results))
+        .then(results => commit(mutations.setToys(results)))
         .catch(err => {
           console.log('err from loadToys')
           throw err
@@ -60,7 +60,7 @@ export const toyModule = {
     },
     removeToy({ commit }, { toyId }) {
       return toyService.remove(toyId)
-        .then(() => commit('removeToy', toyId))
+        .then(() => commit(mutations.removeToy(toyId)))
         .catch(err => {
           console.log('err from removeToy')
           throw err
@@ -70,7 +70,7 @@ export const toyModule = {
       return toyService.save(toy)
         .then(({ upsertedId }) => {
           if (upsertedId) toy._id = upsertedId
-          commit('saveToy', toy)
+          commit(mutations.saveToy(toy))
         })
         .catch(err => {
           console.log('err from saveToy')

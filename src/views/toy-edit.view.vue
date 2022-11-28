@@ -53,6 +53,7 @@
 <script>
 import { ElMessage } from 'element-plus'
 
+import { actions } from '../store/modules/toy.store'
 import { utilService } from '../services/util.service.js'
 import { uploadService } from '../services/upload.service'
 import { toyService, TAGS } from '../services/toy.service.js'
@@ -83,7 +84,7 @@ export default {
   methods: {
     handleSubmit() {
       if (!this.toyId) this.toy.createdAt = Date.now()
-      this.$store.dispatch({ type: 'saveToy', toy: this.toy })
+      this.$store.dispatch(actions.saveToy(this.toy))
         .then(() => {
           ElMessage.success('The toy saved successfully!')
           this.$router.push('/')
